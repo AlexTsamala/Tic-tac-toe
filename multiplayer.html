@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <link rel="icon" type="image/x-icon" href="/assets/favicon-32x32.png">
+        <title> Tic-tac-toe Multiplayer </title>
+        <link rel="stylesheet" href="multiplayer.css" />
+    </head>
+    <body>
+        <div class="main-container">
+            <div class="newGame">
+                <img alt="logo-image" src="./assets/logo.svg"/>
+                <div class = "pick-player">
+                    <h1>PICK PLAYER 1’S MARK</h1>
+                    <div class="icon-x-and-o">
+                        <div class="x-div">
+                        <img alt="X-image" src="./assets/Combined Shape Copy 2.png"/>
+                        </div>
+                        <div class="O-div">
+                            <img alt="O-image" src="./assets/Oval Copy.png"/>
+                        </div>
+                    </div>
+                    <h2>REMEMBER : X GOES FIRST</h2>
+                </div>
+                <button type="button" id="cpuButton" class="buttons">NEW GAME (VS CPU)</button>
+                <button type="button" id="playerButton" class="buttons">NEW GAME  (VS PLAYER)</button>
+            </div>
+            <div class="multiplayer-game">
+            <div class="header">
+                <img alt="logo-image" src="./assets/logo.svg"/>
+                <div class="turn-div">
+                    <img id="xImage" alt="X-image" src="./assets/Combined Shape Copy 2.png"/>
+                    <img id="oImage" alt="O-image" src="./assets/Oval Copy.png"/>
+                    <span class="turn-text">TURN</span>
+                </div>
+                <div id="restartButton" class="restart"><img alt="O-image" src="./assets/icon-restart.svg"/></div>
+            </div>
+            <div class="game-zone">
+                <div class="click-zone"></div>
+                <div class="click-zone"></div>
+                <div class="click-zone"></div>
+                <div class="click-zone"></div>
+                <div class="click-zone"></div>
+                <div class="click-zone"></div>
+                <div class="click-zone"></div>
+                <div class="click-zone"></div>
+                <div class="click-zone"></div>
+                <div  class="score-sheet xPlayer"> <span  class="score-of-player">X (P2)</span><span id="xPlayer" class="score">0</span></div>
+                <div  class="score-sheet tie"><span  class="score-of-player">TIES</span><span id="tie" class="score">0</span></div>
+                <div  class="score-sheet oPlayer"><span  class="score-of-player">O (P1)</span><span id="oPlayer" class="score">0</span></div>
+            </div>
+        </div>
+        </div>
+        <div class="won-result">
+            <span class="which-player-won">PLAYER 1 WINS!</span>
+            <div class="won-middle-div">
+                <img class="players-logo" alt="X-image" src="./assets/icon-x.svg"/>
+                <h1>TAKES THE ROUND</h1>
+            </div>
+            <div>
+                <button class="quit-button" type="button">QUIT</button>
+                <button class="next-round-button" type="button">NEXT ROUND</button>
+            </div>
+        </div>
+        <div class="round-tied">
+            <h1>ROUND TIED</h1>
+            <button class="quit-button" type="button">QUIT</button>
+            <button class="next-round-button" type="button">NEXT ROUND</button>
+        </div>
+        <div id="restart-order" class="restart-game">
+            <h1>RESTART GAME?</h1>
+            <button id="cancelButton" class="cancel-button" type="button">NO, CANCEL</button>
+            <button id="restartButtonClick" class="restart-button" type="button">YES, RESTART</button>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>

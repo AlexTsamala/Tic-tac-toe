@@ -1,0 +1,484 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@700&display=swap');
+*{
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+body{
+    background-color: #1A2A33;
+    font-family: 'Outfit';
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.main-container{
+    display: flex;
+    flex-direction: column;
+    margin: 24px 24px 0;
+    text-align: center;
+}
+.newGame{
+    display:none;
+    margin: auto;
+}
+
+.multiplayer-game{
+    display:block;
+}
+
+.pick-player{
+    height: 205px;
+    border-radius: 15px;
+    background-color: #1F3641;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 32px 0;
+    box-shadow: inset 0px -8px 0px #10212A;
+}
+
+h1{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 1px;
+    text-align: center;
+    color: #A8BFC9;
+}
+
+.icon-x-and-o{
+    height: 72px;
+    width: 279px;
+    border-radius: 10px;
+    background-color: #1A2A33;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 24px 0 17px;
+}
+
+.x-div{
+    width: 131px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.O-div{
+    height: 54px;
+    width: 131px;
+    border-radius: 10px;
+    background-color:#A8BFC9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h2{
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    text-align: center;
+    color: #A8BFC9;
+    mix-blend-mode: normal;
+    opacity: 0.5;
+}
+
+.buttons{
+    font-family: 'Outfit';
+    height: 56px;
+    width: 327px;
+    border-radius: 15px;
+    font-family: Outfit;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-align: center;
+    color: #1A2A33;
+    padding-bottom: 10px;
+}
+
+#cpuButton{
+    background-color:#F2B137;
+    box-shadow: inset 0px -8px 0px #CC8B13;
+    margin-bottom: 16px;
+}
+
+#playerButton{
+    background-color:#31C3BD;
+    box-shadow: inset 0px -8px 0px #118C87;
+}
+
+#cpuButton:hover{
+    background: #FFC860;
+}
+
+#playerButton:hover{
+    background: #65E9E4;
+}
+
+.x-div:hover{
+    background: rgba(168, 191, 201, 0.05);
+    background-color: #A8BFC90D;
+    border-radius: 10px;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom:64px;
+}
+
+.turn-div{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 40px;
+    width: 96px;
+    background: #1F3641;
+    box-shadow: inset 0px -4px 0px #10212A;
+    border-radius: 5px;
+}
+
+.turn-text{
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 18px;
+    letter-spacing: 0.875px;
+    color:#A8BFC9;
+}
+
+#xImage{
+    width:16px;
+    height:16px;
+}
+
+#oImage{
+    display: none;
+    width:16px;
+    height:16px;
+}
+
+.restart{
+    height: 40px;
+    width: 40px;
+    border-radius: 5px;
+    background: #A8BFC9;
+    box-shadow: inset 0px -4px 0px #6B8997;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-zone{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 19px;
+    max-width: 440px;
+}
+
+.click-zone{
+    height: 96px;
+    width: 96px;
+    border-radius: 10px;
+    background: #1F3641;
+    box-shadow: inset 0px -8px 0px #10212A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.score-sheet{
+    height: 64px;
+    width: 96px;
+    border-radius: 10px;
+    color: #1A2A33;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.score{
+    font-family: Outfit;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 25px;
+    letter-spacing: 1.25px;
+    text-align: center;
+}
+
+.score-of-player{
+    font-family: Outfit;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0.875px;
+    text-align: center;
+}
+
+.xPlayer{
+    background-color: #31C3BD;
+}
+.oPlayer{
+    background-color: #A8BFC9;
+}
+
+.tie{
+    background-color: #F2B137;
+}
+
+.restart:hover{
+    background-color: #DBE8ED;
+}
+
+.won-result{
+    height: 228px;
+    background-color: #1F3641;
+    display:none;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    padding-top: 40px;
+    top: 220px;
+}
+
+.players-logo{
+    Width:28px;
+    Height:28px;
+    margin-right: 8px;
+}
+
+.won-middle-div{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+    margin-top:14px;
+}
+
+.which-player-won{
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.875px;
+    color: #A8BFC9;
+}
+
+.won-result h1{
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 30px;
+    letter-spacing: 1.5px;
+    color: #31C3BD;
+}
+
+.quit-button{
+    font-family: 'Outfit';
+    height: 52px;
+    width: 76px;
+    border-radius: 10px;
+    background: #A8BFC9;
+    box-shadow: inset 0px -4px 0px #6B8997;
+    color:#1A2A33;
+    margin-right: 16px;
+}
+
+.next-round-button{
+    font-family: 'Outfit';
+    height: 52px;
+    width: 146px;
+    border-radius: 10px;
+    color:#1A2A33;
+    background-color: #F2B137;
+    box-shadow: inset 0px -4px 0px #CC8B13;  
+}
+
+.round-tied{
+    height: 228px;
+    background-color: #1F3641;
+    display:none;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    padding-top: 61px;
+    top:220px;
+}
+
+.round-tied h1{
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color:#A8BFC9;
+    margin-bottom: 24px;
+}
+
+.quit-button:hover{
+    background: #DBE8ED;
+}
+
+.next-round-button:hover{
+    background: #FFC860;
+}
+
+.restart-game{
+    height: 228px;
+    background-color: #1F3641;
+    display:block;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    padding-top: 61px;
+    top:220px;
+    display: none;
+}
+
+.restart-game h1{
+    font-size: 24px;
+    letter-spacing: 1.5px;
+    font-family: Outfit;
+    line-height: 30px;
+    color:#A8BFC9;
+    margin-bottom:24px;
+}
+
+.cancel-button{
+    height: 52px;
+    width: 139px;
+    border-radius: 10px;
+    background: #A8BFC9;
+    box-shadow: inset 0px -4px 0px #6B8997;
+    font-family: Outfit;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color:#1A2A33;
+    margin-right: 16px;
+}
+
+.restart-button{
+    height: 52px;
+    width: 151px;
+    background: #F2B137;
+    box-shadow: inset 0px -4px 0px #CC8B13;
+    border-radius: 10px;
+    font-family: Outfit;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color:#1A2A33;
+}
+
+.cancel-button:hover{
+background-color:#DBE8ED;
+}
+
+.restart-button:hover{
+background-color:#FFC860;
+}
+
+@media(min-width:768px){
+    .main-container{
+        justify-content: center;
+    }
+
+    .newGame{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        display: none;
+    }
+    .multiplayer-game{
+        display: block;
+    }
+
+    .buttons{
+        width:460px;
+        height:67px;
+    }
+
+    .pick-player{
+        width:460px;
+    }
+
+    .icon-x-and-o{
+        width:412px;
+    }
+
+    .O-div{
+        width:198px;
+    }
+
+    .x-div{
+        width:198px;
+    }
+
+    .turn-div{
+        height: 52px;
+        width: 140px;
+        border-radius: 10px;
+    }
+
+    .restart{
+        height: 52px;
+        width: 52px;
+        border-radius: 10px;
+    }
+
+    .click-zone{
+        height: 140px;
+        width: 140px;
+        border-radius: 15px;
+    }
+
+    .score-sheet{
+        height: 72px;
+        width: 140px;
+        border-radius: 15px;
+    }
+
+    .game-zone{
+        max-width:460px;
+    }
+
+    .round-tied{
+        top: 40%;
+    }
+
+    .round-tied h1{
+        font-size: 40px;
+        line-height: 50px;
+        letter-spacing: 2.5px;     
+    }
+
+    .won-result{
+        height:266px;
+        display: none;
+        top: 40%;
+    }
+
+    .won-result h1{
+        font-size: 40px;
+        line-height: 50px;
+        letter-spacing: 2.5px;
+    }
+
+    .players-logo{
+        Width: 64px;
+        Height: 64px;
+        margin-right: 24px;
+    }
+
+    .restart-game{
+        height:266px;
+        top:40%;
+        display: none;
+    }
+
+    .restart-game h1{
+        font-size: 40px;
+        line-height: 50px;
+        letter-spacing: 2.5px;
+    }
+}
+
