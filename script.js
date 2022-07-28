@@ -1,30 +1,55 @@
-let clickBox = document.getElementsByClassName("click-zone");
-let scoreOfX = document.getElementById("xPlayer");
-let scoreOfO = document.getElementById("tie");
-let scoreOfTie = document.getElementById("oPlayer");
-n = -1;
-let xImage = document.getElementById('xImage');
-let oImage = document.getElementById('oImage');
 const restartButton = document.getElementById('restartButton');
 const restartOutPut = document.getElementById('restart-order');
 const cancelButton = document.getElementById('cancelButton');
 const restartButtonClick = document.getElementById('restartButtonClick');
-let addCharacter = (event)=>{
-    n++
-    if(n % 2 === 0){
-    const character = document.createElement("img");
-    character.src="./assets/icon-x.svg";
-    event.target.appendChild(character);
-    xImage.style.display ="none";
-    oImage.style.display = "block";
-    }else{
+let clickBox = document.getElementsByClassName("click-zone");
+let scoreOfX = document.getElementById("xPlayer");
+let scoreOfO = document.getElementById("tie");
+let scoreOfTie = document.getElementById("oPlayer");
+let xImage = document.getElementById('xImage');
+let oImage = document.getElementById('oImage');
+let indexOfX =[];
+let indexOfO = [];
+let checkX = false;
+let checkO = false;
+let winCondition = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]] ;
+n = -1;
+
+ function addCharacter(event) {
+    n++;
+    if (n % 2 === 0) {
         const character = document.createElement("img");
-        character.src="./assets/icon-o.svg";
+        character.src = "./assets/icon-x.svg";
         event.target.appendChild(character);
-        xImage.style.display ="block";
+        xImage.style.display = "none";
+        oImage.style.display = "block";
+        indexOfX.push(Number(event.target.getAttribute('index')));
+        winCondition.map((combination)=>{
+            if(!checkX){
+                checkX = combination.every((number)=>{
+                return indexOfX.includes(number)
+                })      
+                console.log(checkX);
+            } 
+        })  
+    } else {
+        const character = document.createElement("img");
+        character.src = "./assets/icon-o.svg";
+        event.target.appendChild(character);
+        xImage.style.display = "block";
         oImage.style.display = "none";
-    }
-    event.target.removeEventListener('click',addCharacter);
+        indexOfO.push(Number(event.target.getAttribute('index')));
+        winCondition.map((combination)=>{
+            if(!checkO){
+                checkO = combination.every((number)=>{
+                return indexOfO.includes(number)
+                })      
+                console.log(checkO);
+            } 
+        })
+    }    
+    event.target.removeEventListener('click', addCharacter);
+    winner();
 }
 
 
@@ -50,4 +75,9 @@ restartButtonClick.addEventListener('click',(event)=>{
         clickBox[i].addEventListener("click",addCharacter)
     }
     restartOutPut.style.display = 'none';
+    n = -1;
+    xImage.style.display ="block";
+    oImage.style.display ="none"; 
+    indexOfX.splice(0,5);
+    indexOfO.splice(0,5);
 })
