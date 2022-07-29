@@ -15,13 +15,18 @@ const scoreOfO = document.getElementById("tie");
 const scoreOfTie = document.getElementById("oPlayer");
 const xImage = document.getElementById('xImage');
 const oImage = document.getElementById('oImage');
+const xPlayer = document.getElementById('xPlayer');
+const oPlayer = document.getElementById('oPlayer');
+const tieGame = document.getElementById('tie');
 let indexOfX =[];
 let indexOfO = [];
 let checkX = false;
 let checkO = false;
 let winCondition = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]] ;
 n = -1;
-
+x=0;
+o=0;
+tie=0;
 
 function winner(){
     if(checkX){
@@ -29,15 +34,21 @@ function winner(){
         winnersLogo.src="./assets/icon-x.svg";
         takesRoundText.style.color="#31C3BD";
         playerWonOutPut.style.display = 'block';
+        x++;
+        xPlayer.textContent=x;
     }
     if(checkO){
       winnersNumber.innerHTML = "PLAYER 2 WINS!"
       winnersLogo.src="./assets/icon-o.svg";
       takesRoundText.style.color="#F2B137";
       playerWonOutPut.style.display = 'block';
+      o++;
+      oPlayer.textContent=o;
     }
     if(n===8&&!checkO&&!checkX){
         tiedRound.style.display = 'block';
+        tie++;
+        tieGame.textContent=tie;
     }
  }
  function addCharacter(event) {
@@ -105,6 +116,12 @@ restartButtonClick.addEventListener('click',(event)=>{
     oImage.style.display ="none"; 
     indexOfX.splice(0,5);
     indexOfO.splice(0,5);
+    xPlayer.textContent=0;
+    oPlayer.textContent=0;
+    tieGame.textContent=0;
+    x=0;
+    o=0;
+    tie=0;
 })
 
 for(let i = 0; i<nextRoundButton.length; i++){
