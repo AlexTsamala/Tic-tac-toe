@@ -22,7 +22,8 @@ let indexOfX =[];
 let indexOfO = [];
 let checkX = false;
 let checkO = false;
-let winCondition = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]] ;
+let winCondition = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+let winCombination;
 n = -1;
 x=0;
 o=0;
@@ -62,12 +63,16 @@ function winner(){
         indexOfX.push(Number(event.target.getAttribute('index')));
         winCondition.map((combination)=>{
             if(!checkX){
-                checkX = combination.every((number)=>{
-                return indexOfX.includes(number)
-                })      
-                
+                checkX = combination.every((number)=> indexOfX.includes(number));
+                if(checkX){
+                    combination.map((winnerCombination)=>{
+                        clickBox[winnerCombination].style.backgroundColor = '#31C3BD';
+                        clickBox[winnerCombination].firstChild.src ="./assets/icon-of-winner-x.svg";
+                    })
+                }
             } 
-        })  
+        })
+        winCombination=indexOfX;
     } else {
         const character = document.createElement("img");
         character.src = "./assets/icon-o.svg";
@@ -77,9 +82,13 @@ function winner(){
         indexOfO.push(Number(event.target.getAttribute('index')));
         winCondition.map((combination)=>{
             if(!checkO){
-                checkO = combination.every((number)=>{
-                return indexOfO.includes(number)
-                })      
+                checkO = combination.every((number)=>indexOfO.includes(number));
+                if(checkO){
+                combination.map((winnerCombination)=>{
+                    clickBox[winnerCombination].style.backgroundColor = '#F2B137';
+                    clickBox[winnerCombination].firstChild.src ="./assets/icon-of-winner-o.svg";
+                })
+            }
             } 
         })
     }
@@ -87,6 +96,7 @@ function winner(){
     event.target.removeEventListener('click', addCharacter);
     winner();
 }
+
 
 
 for (var i = 0; i<clickBox.length; i++){
@@ -108,7 +118,8 @@ restartButtonClick.addEventListener('click',(event)=>{
         }
     }
     for (var i = 0; i<clickBox.length; i++){
-        clickBox[i].addEventListener("click",addCharacter)
+        clickBox[i].addEventListener("click",addCharacter);
+        clickBox[i].style.backgroundColor = "#1F3641";
     }
     restartOutPut.style.display = 'none';
     n = -1;
@@ -134,7 +145,8 @@ for(let i = 0; i<nextRoundButton.length; i++){
             }
         }
         for (var i = 0; i<clickBox.length; i++){
-            clickBox[i].addEventListener("click",addCharacter)
+            clickBox[i].addEventListener("click",addCharacter);
+            clickBox[i].style.backgroundColor = "#1F3641";
         }
         xImage.style.display ="block";
         oImage.style.display ="none"; 
