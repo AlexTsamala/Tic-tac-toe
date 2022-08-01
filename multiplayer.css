@@ -20,12 +20,12 @@ body{
     text-align: center;
 }
 .newGame{
-    display:none;
+    display:flex;
     margin: auto;
 }
 
 .multiplayer-game{
-    display:block;
+    display:none;
 }
 
 .pick-player{
@@ -60,12 +60,18 @@ h1{
     margin: 24px 0 17px;
 }
 
+.littleO{
+    height: 32px;
+    width: 32px;
+}
+
 .x-div{
     width: 131px;
     height: 54px;
     display: flex;
     align-items: center;
-    justify-content: center
+    justify-content: center;
+    cursor: pointer;
 }
 
 .O-div{
@@ -76,6 +82,7 @@ h1{
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 h2{
@@ -285,6 +292,7 @@ h2{
     box-shadow: inset 0px -4px 0px #6B8997;
     color:#1A2A33;
     margin-right: 16px;
+    cursor: pointer;
 }
 
 .next-round-button{
@@ -295,6 +303,7 @@ h2{
     color:#1A2A33;
     background-color: #F2B137;
     box-shadow: inset 0px -4px 0px #CC8B13;  
+    cursor: pointer;
 }
 
 .round-tied{
@@ -356,6 +365,7 @@ h2{
     letter-spacing: 1px;
     color:#1A2A33;
     margin-right: 16px;
+    cursor: pointer;
 }
 
 .restart-button{
@@ -368,6 +378,7 @@ h2{
     font-size: 16px;
     letter-spacing: 1px;
     color:#1A2A33;
+    cursor: pointer;
 }
 
 .cancel-button:hover{
@@ -387,15 +398,16 @@ background-color:#FFC860;
         display: flex;
         flex-direction: column;
         align-items: center;
-        display: none;
+        
     }
     .multiplayer-game{
-        display: block;
+        display: none;
     }
 
     .buttons{
         width:460px;
         height:67px;
+        cursor: pointer;
     }
 
     .pick-player{
@@ -424,6 +436,7 @@ background-color:#FFC860;
         height: 52px;
         width: 52px;
         border-radius: 10px;
+        cursor: pointer;
     }
 
     .click-zone{

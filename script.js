@@ -10,14 +10,18 @@ const quitButton = document.getElementsByClassName("quit-button");
 const nextRoundButton = document.getElementsByClassName("next-round-button");
 const tiedRound = document.getElementById('tiedRound');
 const clickBox = document.getElementsByClassName("click-zone");
-const scoreOfX = document.getElementById("xPlayer");
-const scoreOfO = document.getElementById("tie");
-const scoreOfTie = document.getElementById("oPlayer");
 const xImage = document.getElementById('xImage');
 const oImage = document.getElementById('oImage');
+const xPlayersNumber = document.getElementById('xPlayersNumber');
+const oPlayersNumber= document.getElementById('oPlayersNumber');
+const tieGame = document.getElementById('tie');
+const newGameContainer = document.getElementById('newGameContainer');
+const multiplayerContainer = document.getElementById('multiplayerContainer');
+const chooseXPlayer = document.getElementById('chooseXPlayer');
+const chooseOPlayer = document.getElementById('chooseOPlayer');
 const xPlayer = document.getElementById('xPlayer');
 const oPlayer = document.getElementById('oPlayer');
-const tieGame = document.getElementById('tie');
+const playerButton = document.getElementById('playerButton');
 let indexOfX =[];
 let indexOfO = [];
 let checkX = false;
@@ -29,22 +33,32 @@ x=0;
 o=0;
 tie=0;
 
+
 function winner(){
     if(checkX){
-        winnersNumber.innerHTML = "PLAYER 1 WINS!"
         winnersLogo.src="./assets/icon-x.svg";
         takesRoundText.style.color="#31C3BD";
         playerWonOutPut.style.display = 'block';
         x++;
-        xPlayer.textContent=x;
+        xPlayersNumber.textContent=x;
+        if(xPlayer.textContent==="X (P2)"){
+            winnersNumber.innerHTML = "PLAYER 2 WINS!"
+        }
     }
     if(checkO){
-      winnersNumber.innerHTML = "PLAYER 2 WINS!"
       winnersLogo.src="./assets/icon-o.svg";
       takesRoundText.style.color="#F2B137";
       playerWonOutPut.style.display = 'block';
       o++;
-      oPlayer.textContent=o;
+      oPlayersNumber.textContent=o;
+      if(oPlayer.textContent==="O (P1)"){
+        winnersNumber.innerHTML = "PLAYER 1 WINS!"
+    }
+
+    if(oPlayer.textContent==="O (P2)"){
+        winnersNumber.innerHTML = "PLAYER 2 WINS!"
+    }
+    
     }
     if(n===8&&!checkO&&!checkX){
         tiedRound.style.display = 'block';
@@ -52,6 +66,11 @@ function winner(){
         tieGame.textContent=tie;
     }
  }
+
+ function removeOutLine(event){
+    event.target.removeChild(event.target.firstChild)
+} 
+
  function addCharacter(event) {
     n++;
     if (n % 2 === 0) {
@@ -94,13 +113,19 @@ function winner(){
     }
         
     event.target.removeEventListener('click', addCharacter);
+    event.target.removeEventListener('mouseover',removeOutLine);
     winner();
 }
 
-
-
 for (var i = 0; i<clickBox.length; i++){
-    clickBox[i].addEventListener("click",addCharacter)
+    clickBox[i].addEventListener("click",addCharacter);
+        
+        clickBox[i].addEventListener("mouseover",(event)=>{
+            const outLine = document.createElement("img");
+            outLine.src = "./assets/icon-x-outline.svg";
+            event.target.appendChild(outLine);
+        })
+        clickBox[i].addEventListener( 'mouseout',(removeOutLine))
 }
 
 restartButton.addEventListener("click", (event)=>{
@@ -127,8 +152,8 @@ restartButtonClick.addEventListener('click',(event)=>{
     oImage.style.display ="none"; 
     indexOfX.splice(0,5);
     indexOfO.splice(0,5);
-    xPlayer.textContent=0;
-    oPlayer.textContent=0;
+    xPlayersNumber.textContent=0;
+    oPlayersNumber.textContent=0;
     tieGame.textContent=0;
     x=0;
     o=0;
@@ -157,3 +182,64 @@ for(let i = 0; i<nextRoundButton.length; i++){
         checkO = false;
     })
 }
+
+for(let i = 0; i<quitButton.length; i++){
+    quitButton[i].addEventListener('click',(event)=>{
+        newGameContainer.style.display = 'flex';
+        multiplayerContainer.style.display = 'none';
+        playerWonOutPut.style.display = 'none';
+        tiedRound.style.display = 'none';
+        n = -1;
+        indexOfX.splice(0,5);
+        indexOfO.splice(0,5);
+        checkX = false;
+        checkO = false;
+        xPlayersNumber.textContent=0;
+        oPlayersNumber.textContent=0;
+        tieGame.textContent=0;
+        x=0;
+        o=0;
+        tie=0;
+        for (var i = 0; i < clickBox.length; i++){
+            if(clickBox[i].hasChildNodes()){
+            clickBox[i].removeChild(clickBox[i].firstChild)
+            }
+        }
+        for (var i = 0; i<clickBox.length; i++){
+            clickBox[i].addEventListener("click",addCharacter);
+            clickBox[i].style.backgroundColor = "#1F3641";
+        }
+    })
+}
+
+chooseXPlayer.addEventListener('click',(event)=>{
+    xPlayer.innerHTML = 'X (P1)';
+    oPlayer.innerHTML = 'O (P2)';
+    if(checkX){
+        winnersNumber.innerHTML = "PLAYER 1 WINS!"
+    }
+    if(checkO){
+        winnersNumber.innerHTML = "PLAYER 2 WINS!"
+    }
+    playerButton.addEventListener('click',(event)=>{
+        newGameContainer.style.display = 'none';
+        multiplayerContainer.style.display = 'block';
+    })
+    
+})
+
+chooseOPlayer.addEventListener('click',(event)=>{
+    xPlayer.innerHTML = 'X (P2)';
+    oPlayer.innerHTML = 'O (P1)';
+    if(checkX){
+        winnersNumber.innerHTML = "PLAYER 2 WINS!"
+    }
+    if(checkO){
+        winnersNumber.innerHTML = "PLAYER 1 WINS!"
+    }
+    playerButton.addEventListener('click',(event)=>{
+        newGameContainer.style.display = 'none';
+        multiplayerContainer.style.display = 'block';
+    })
+})
+
