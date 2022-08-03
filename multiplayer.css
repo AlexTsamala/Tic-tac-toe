@@ -20,7 +20,6 @@ body{
     text-align: center;
 }
 .newGame{
-    display:flex;
     margin: auto;
 }
 
@@ -60,6 +59,11 @@ h1{
     margin: 24px 0 17px;
 }
 
+.littleX{
+    height: 32px;
+    width: 32px;
+}
+
 .littleO{
     height: 32px;
     width: 32px;
@@ -78,7 +82,7 @@ h1{
     height: 54px;
     width: 131px;
     border-radius: 10px;
-    background-color:#A8BFC9;
+    background-color:#1A2A33;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -125,6 +129,20 @@ h2{
 
 #playerButton:hover{
     background: #65E9E4;
+}
+
+.o-div{
+    border-radius:10px;
+}
+
+.x-div{
+    border-radius:10px;
+}
+
+.O-div:hover{
+    background: rgba(168, 191, 201, 0.05);
+    background-color: #A8BFC90D;
+    border-radius: 10px;
 }
 
 .x-div:hover{
@@ -252,6 +270,12 @@ h2{
     text-align: center;
     padding-top: 40px;
     top: 220px;
+    opacity: 0;
+}
+
+.transition-Div{
+    opacity: 1;
+    transition: 1.5s;
 }
 
 .players-logo{
@@ -315,6 +339,12 @@ h2{
     text-align: center;
     padding-top: 61px;
     top:220px;
+    opacity: 0;
+}
+
+.transition-Div-Tied{
+    opacity: 1;
+    transition: 1.5s;
 }
 
 .round-tied h1{
@@ -388,6 +418,19 @@ background-color:#DBE8ED;
 .restart-button:hover{
 background-color:#FFC860;
 }
+
+.xOutline:hover{
+    background-image: url('./assets/icon-x-outline.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.oOutline:hover{
+    background-image: url('./assets/icon-o-outline.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 
 @media(min-width:768px){
     .main-container{

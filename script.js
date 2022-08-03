@@ -1,3 +1,4 @@
+'use strict'
 const restartButton = document.getElementById('restartButton');
 const restartOutPut = document.getElementById('restart-order');
 const cancelButton = document.getElementById('cancelButton');
@@ -22,23 +23,37 @@ const chooseOPlayer = document.getElementById('chooseOPlayer');
 const xPlayer = document.getElementById('xPlayer');
 const oPlayer = document.getElementById('oPlayer');
 const playerButton = document.getElementById('playerButton');
+const computerButton = document.getElementById('cpuButton');
+const littleO = document.getElementById('littleO');
+const littleX = document.getElementById('littleX');
 let indexOfX =[];
 let indexOfO = [];
 let checkX = false;
 let checkO = false;
 let winCondition = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-let winCombination;
-n = -1;
-x=0;
-o=0;
-tie=0;
+let n = -1;
+let x=0;
+let o=0;
+let tie=0;
 
+function playerGame(){
+    newGameContainer.style.display = 'none';
+    multiplayerContainer.style.display = 'block';
+}
+
+function computerGame(){
+    newGameContainer.style.display = 'none';
+    multiplayerContainer.style.display = 'block';
+}
 
 function winner(){
     if(checkX){
         winnersLogo.src="./assets/icon-x.svg";
         takesRoundText.style.color="#31C3BD";
         playerWonOutPut.style.display = 'block';
+        setTimeout(()=>{
+            playerWonOutPut.classList.add('transition-Div');
+        },100) 
         x++;
         xPlayersNumber.textContent=x;
         if(xPlayer.textContent==="X (P2)"){
@@ -49,6 +64,9 @@ function winner(){
       winnersLogo.src="./assets/icon-o.svg";
       takesRoundText.style.color="#F2B137";
       playerWonOutPut.style.display = 'block';
+      setTimeout(()=>{
+        playerWonOutPut.classList.add('transition-Div');
+    },100) 
       o++;
       oPlayersNumber.textContent=o;
       if(oPlayer.textContent==="O (P1)"){
@@ -62,23 +80,43 @@ function winner(){
     }
     if(n===8&&!checkO&&!checkX){
         tiedRound.style.display = 'block';
+        setTimeout(()=>{
+            tiedRound.classList.add('transition-Div-Tied');
+        },100) 
         tie++;
         tieGame.textContent=tie;
     }
  }
-
- function removeOutLine(event){
-    event.target.removeChild(event.target.firstChild)
-} 
+function giveOutline(){
+    for(let i = 0; i<clickBox.length; i++){
+        if(n % 2 ===0) {
+            clickBox[i].classList.remove("xOutline");
+            clickBox[i].classList.add("oOutline");
+        }else{
+            clickBox[i].classList.remove("oOutline");
+            clickBox[i].classList.add("xOutline"); 
+        }
+    }
+    indexOfX.map((removeOutline)=>{
+        clickBox[Number(removeOutline)].classList.remove("oOutline");
+        clickBox[Number(removeOutline)].classList.remove("xOutline");
+    })
+    indexOfO.map((removeOutline)=>{
+        clickBox[Number(removeOutline)].classList.remove("oOutline");
+        clickBox[Number(removeOutline)].classList.remove("xOutline");
+    })
+}
 
  function addCharacter(event) {
     n++;
+    giveOutline();
     if (n % 2 === 0) {
         const character = document.createElement("img");
         character.src = "./assets/icon-x.svg";
         event.target.appendChild(character);
         xImage.style.display = "none";
         oImage.style.display = "block";
+        event.target.classList.remove("oOutline");
         indexOfX.push(Number(event.target.getAttribute('index')));
         winCondition.map((combination)=>{
             if(!checkX){
@@ -91,13 +129,13 @@ function winner(){
                 }
             } 
         })
-        winCombination=indexOfX;
     } else {
         const character = document.createElement("img");
         character.src = "./assets/icon-o.svg";
         event.target.appendChild(character);
         xImage.style.display = "block";
         oImage.style.display = "none";
+        event.target.classList.remove("xOutline");
         indexOfO.push(Number(event.target.getAttribute('index')));
         winCondition.map((combination)=>{
             if(!checkO){
@@ -111,24 +149,17 @@ function winner(){
             } 
         })
     }
-        
+    
     event.target.removeEventListener('click', addCharacter);
-    event.target.removeEventListener('mouseover',removeOutLine);
     winner();
 }
 
 for (var i = 0; i<clickBox.length; i++){
     clickBox[i].addEventListener("click",addCharacter);
-        
-        clickBox[i].addEventListener("mouseover",(event)=>{
-            const outLine = document.createElement("img");
-            outLine.src = "./assets/icon-x-outline.svg";
-            event.target.appendChild(outLine);
-        })
-        clickBox[i].addEventListener( 'mouseout',(removeOutLine))
+
 }
 
-restartButton.addEventListener("click", (event)=>{
+restartButton.addEventListener("click", (event)=>{[]
     restartOutPut.style.display = 'block';
 })
 
@@ -158,6 +189,9 @@ restartButtonClick.addEventListener('click',(event)=>{
     x=0;
     o=0;
     tie=0;
+    giveOutline();
+    playerWonOutPut.classList.remove('transition-Div');
+    tiedRound.classList.remove('transition-Div-Tied') ;
 })
 
 for(let i = 0; i<nextRoundButton.length; i++){
@@ -180,12 +214,15 @@ for(let i = 0; i<nextRoundButton.length; i++){
         indexOfO.splice(0,5);
         checkX = false;
         checkO = false;
+        giveOutline();
+        playerWonOutPut.classList.remove('transition-Div');
+        tiedRound.classList.remove('transition-Div-Tied') ;
     })
 }
 
 for(let i = 0; i<quitButton.length; i++){
     quitButton[i].addEventListener('click',(event)=>{
-        newGameContainer.style.display = 'flex';
+        newGameContainer.style.display = '';
         multiplayerContainer.style.display = 'none';
         playerWonOutPut.style.display = 'none';
         tiedRound.style.display = 'none';
@@ -209,6 +246,17 @@ for(let i = 0; i<quitButton.length; i++){
             clickBox[i].addEventListener("click",addCharacter);
             clickBox[i].style.backgroundColor = "#1F3641";
         }
+        playerButton.removeEventListener('click', playerGame);
+        computerButton.removeEventListener('click',computerGame);
+        chooseXPlayer.style.backgroundColor ="";
+        chooseOPlayer.style.backgroundColor ="";
+        littleX.src="./assets/xGrey.svg";
+        littleO.src="./assets/oGrey.svg";
+        xImage.style.display ="block";
+        oImage.style.display ="none";
+        giveOutline();
+        playerWonOutPut.classList.remove('transition-Div');
+        tiedRound.classList.remove('transition-Div-Tied') ;
     })
 }
 
@@ -221,11 +269,12 @@ chooseXPlayer.addEventListener('click',(event)=>{
     if(checkO){
         winnersNumber.innerHTML = "PLAYER 2 WINS!"
     }
-    playerButton.addEventListener('click',(event)=>{
-        newGameContainer.style.display = 'none';
-        multiplayerContainer.style.display = 'block';
-    })
-    
+    playerButton.addEventListener('click',playerGame);
+    computerButton.addEventListener('click',computerGame);
+    chooseXPlayer.style.backgroundColor ="#A8BFC9";
+    chooseOPlayer.style.backgroundColor ="";
+    littleX.src="./assets/xBlue.svg";
+    littleO.src="./assets/oGrey.svg";
 })
 
 chooseOPlayer.addEventListener('click',(event)=>{
@@ -237,9 +286,14 @@ chooseOPlayer.addEventListener('click',(event)=>{
     if(checkO){
         winnersNumber.innerHTML = "PLAYER 1 WINS!"
     }
-    playerButton.addEventListener('click',(event)=>{
-        newGameContainer.style.display = 'none';
-        multiplayerContainer.style.display = 'block';
-    })
+    playerButton.addEventListener('click',playerGame);
+    computerButton.addEventListener('click',computerGame);
+    chooseOPlayer.style.backgroundColor ="#A8BFC9";
+    chooseXPlayer.style.backgroundColor ="";
+    littleO.src="./assets/oBlue.svg";
+    littleX.src="./assets/xGrey.svg";
 })
+
+
+
 
