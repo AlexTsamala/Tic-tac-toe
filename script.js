@@ -35,15 +35,30 @@ let n = -1;
 let x=0;
 let o=0;
 let tie=0;
-
+let clickedOnX = false;
+let clickedOnO = false;
+let clickOnSolo = false;
+let clickOnComputer = false;
+let clickedOnXSecond = false;
+let clickedOnOSecond = false;
 function playerGame(){
     newGameContainer.style.display = 'none';
     multiplayerContainer.style.display = 'block';
+    clickOnSolo = true;
 }
 
 function computerGame(){
     newGameContainer.style.display = 'none';
     multiplayerContainer.style.display = 'block';
+    if(clickedOnO){
+        xPlayer.innerHTML = 'X (CPU)';
+        oPlayer.innerHTML = 'O (YOU)';
+    }
+    if(clickedOnX){
+        xPlayer.innerHTML = 'X (YOU)';
+        oPlayer.innerHTML = 'O (CPU)';
+    }
+    clickOnComputer=true;
 }
 
 function winner(){
@@ -56,8 +71,33 @@ function winner(){
         },100) 
         x++;
         xPlayersNumber.textContent=x;
-        if(xPlayer.textContent==="X (P2)"){
-            winnersNumber.innerHTML = "PLAYER 2 WINS!"
+        if(clickOnSolo){
+            clickOnSolo = false;
+            if(xPlayer.textContent==="X (P2)"){
+                winnersNumber.innerHTML = "PLAYER 2 WINS!"
+            }
+        }
+
+
+
+
+
+        if(clickOnComputer){
+            if(clickedOnX&checkX){
+                clickedOnX = false;
+                winnersNumber.innerHTML = "YOU WON!"
+                }else{
+                winnersNumber.innerHTML = "OH NO, YOU LOST…"
+                }
+        }
+
+
+
+
+        for(let i = 0; i<clickBox.length; i++){
+            clickBox[i].removeEventListener('click', addCharacter);
+            clickBox[i].classList.remove("xOutline");
+            clickBox[i].classList.remove("oOutline");
         }
     }
     if(checkO){
@@ -69,12 +109,36 @@ function winner(){
     },100) 
       o++;
       oPlayersNumber.textContent=o;
-      if(oPlayer.textContent==="O (P1)"){
-        winnersNumber.innerHTML = "PLAYER 1 WINS!"
+      if(clickOnSolo){
+        if(oPlayer.textContent==="O (P1)"){
+            winnersNumber.innerHTML = "PLAYER 1 WINS!"
+        }
+
+        if(oPlayer.textContent==="O (P2)"){
+            winnersNumber.innerHTML = "PLAYER 2 WINS!"
+        }
     }
 
-    if(oPlayer.textContent==="O (P2)"){
-        winnersNumber.innerHTML = "PLAYER 2 WINS!"
+
+
+
+    if(clickOnComputer){
+        if(clickedOnO&checkO){
+            clickedOnO = false;
+            winnersNumber.innerHTML = "YOU WON!"
+            }else{
+            winnersNumber.innerHTML = "OH NO, YOU LOST…"
+            }
+    }
+
+
+
+
+
+    for(let i = 0; i<clickBox.length; i++){
+        clickBox[i].removeEventListener('click', addCharacter);
+        clickBox[i].classList.remove("xOutline");
+        clickBox[i].classList.remove("oOutline");
     }
     
     }
@@ -217,6 +281,12 @@ for(let i = 0; i<nextRoundButton.length; i++){
         giveOutline();
         playerWonOutPut.classList.remove('transition-Div');
         tiedRound.classList.remove('transition-Div-Tied') ;
+        if(clickedOnXSecond){
+            clickedOnX = true;
+        }
+        if(clickedOnOSecond){
+            clickedOnO = true;
+        }
     })
 }
 
@@ -257,41 +327,37 @@ for(let i = 0; i<quitButton.length; i++){
         giveOutline();
         playerWonOutPut.classList.remove('transition-Div');
         tiedRound.classList.remove('transition-Div-Tied') ;
+        clickedOnX = false;
+        clickedOnO = false;
+        clickedOnXSecond = false;
+        clickedOnOSecond = false;
     })
 }
 
 chooseXPlayer.addEventListener('click',(event)=>{
     xPlayer.innerHTML = 'X (P1)';
     oPlayer.innerHTML = 'O (P2)';
-    if(checkX){
-        winnersNumber.innerHTML = "PLAYER 1 WINS!"
-    }
-    if(checkO){
-        winnersNumber.innerHTML = "PLAYER 2 WINS!"
-    }
     playerButton.addEventListener('click',playerGame);
     computerButton.addEventListener('click',computerGame);
     chooseXPlayer.style.backgroundColor ="#A8BFC9";
     chooseOPlayer.style.backgroundColor ="";
     littleX.src="./assets/xBlue.svg";
     littleO.src="./assets/oGrey.svg";
+    clickedOnX = true;
+    clickedOnXSecond = true;
 })
 
 chooseOPlayer.addEventListener('click',(event)=>{
     xPlayer.innerHTML = 'X (P2)';
     oPlayer.innerHTML = 'O (P1)';
-    if(checkX){
-        winnersNumber.innerHTML = "PLAYER 2 WINS!"
-    }
-    if(checkO){
-        winnersNumber.innerHTML = "PLAYER 1 WINS!"
-    }
     playerButton.addEventListener('click',playerGame);
     computerButton.addEventListener('click',computerGame);
     chooseOPlayer.style.backgroundColor ="#A8BFC9";
     chooseXPlayer.style.backgroundColor ="";
     littleO.src="./assets/oBlue.svg";
     littleX.src="./assets/xGrey.svg";
+    clickedOnO = true;
+    clickedOnOSecond = true;
 })
 
 
