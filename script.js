@@ -28,6 +28,7 @@ const littleO = document.getElementById('littleO');
 const littleX = document.getElementById('littleX');
 let indexOfX =[];
 let indexOfO = [];
+let GroupOfFreePlace = [0,1,2,3,4,5,6,7,8]
 let checkX = false;
 let checkO = false;
 let winCondition = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
@@ -41,12 +42,12 @@ let clickOnSolo = false;
 let clickOnComputer = false;
 let clickedOnXSecond = false;
 let clickedOnOSecond = false;
+
 function playerGame(){
     newGameContainer.style.display = 'none';
     multiplayerContainer.style.display = 'block';
     clickOnSolo = true;
 }
-
 function computerGame(){
     newGameContainer.style.display = 'none';
     multiplayerContainer.style.display = 'block';
@@ -59,8 +60,31 @@ function computerGame(){
         oPlayer.innerHTML = 'O (CPU)';
     }
     clickOnComputer=true;
+    if(clickedOnOSecond) {
+        for (let i = 0; i<clickBox.length; i++){
+            clickBox[i].classList.remove("xOutline");
+            clickBox[i].classList.add("oOutline");
+        }
+        xImage.style.display = "none";
+        oImage.style.display = "block";
+        const randomIndex =Math.floor(Math.random()*GroupOfFreePlace.length);
+        let placeForX = GroupOfFreePlace[randomIndex];
+        GroupOfFreePlace.splice(randomIndex,1);
+        const characterX = document.createElement("img");
+        characterX.src = "./assets/icon-x.svg";
+        clickBox[placeForX].appendChild(characterX);
+        clickBox[placeForX].removeEventListener('click', addCharacter);
+        clickBox[placeForX].classList.remove("oOutline"); 
+        indexOfX.push(placeForX);      
+    }else{
+        for (let i = 0; i<clickBox.length; i++){
+            clickBox[i].classList.remove("oOutline");
+            clickBox[i].classList.add("xOutline");
+        }
+        xImage.style.display = "block";
+        oImage.style.display = "none"; 
+    }
 }
-
 function winner(){
     if(checkX){
         winnersLogo.src="./assets/icon-x.svg";
@@ -72,17 +96,14 @@ function winner(){
         x++;
         xPlayersNumber.textContent=x;
         if(clickOnSolo){
-            clickOnSolo = false;
             if(xPlayer.textContent==="X (P2)"){
                 winnersNumber.innerHTML = "PLAYER 2 WINS!"
             }
+            if(xPlayer.textContent==="X (P1)"){
+                winnersNumber.innerHTML = "PLAYER 1 WINS!"
+            }
         }
-
-
-
-
-
-        if(clickOnComputer){
+    if(clickOnComputer){
             if(clickedOnX&checkX){
                 clickedOnX = false;
                 winnersNumber.innerHTML = "YOU WON!"
@@ -90,11 +111,7 @@ function winner(){
                 winnersNumber.innerHTML = "OH NO, YOU LOST…"
                 }
         }
-
-
-
-
-        for(let i = 0; i<clickBox.length; i++){
+    for(let i = 0; i<clickBox.length; i++){
             clickBox[i].removeEventListener('click', addCharacter);
             clickBox[i].classList.remove("xOutline");
             clickBox[i].classList.remove("oOutline");
@@ -118,10 +135,6 @@ function winner(){
             winnersNumber.innerHTML = "PLAYER 2 WINS!"
         }
     }
-
-
-
-
     if(clickOnComputer){
         if(clickedOnO&checkO){
             clickedOnO = false;
@@ -130,11 +143,6 @@ function winner(){
             winnersNumber.innerHTML = "OH NO, YOU LOST…"
             }
     }
-
-
-
-
-
     for(let i = 0; i<clickBox.length; i++){
         clickBox[i].removeEventListener('click', addCharacter);
         clickBox[i].classList.remove("xOutline");
@@ -171,8 +179,120 @@ function giveOutline(){
     })
 }
 
+function logicAboutO(event){
+    const character = document.createElement("img");
+    character.src = "./assets/icon-o.svg";
+    event.target.appendChild(character);
+    xImage.style.display = "none";
+    oImage.style.display = "block";
+    indexOfO.push(Number(event.target.getAttribute('index')));
+    winCondition.map((combination)=>{
+        if(!checkO){
+            checkO = combination.every((number)=>indexOfO.includes(number));
+            if(checkO){
+            combination.map((winnerCombination)=>{
+                clickBox[winnerCombination].style.backgroundColor = '#F2B137';
+                clickBox[winnerCombination].firstChild.src ="./assets/icon-of-winner-o.svg";
+            })
+        }
+        } 
+    })
+    if(!checkO){
+        let clickIndex = (Number(event.target.getAttribute('index')))
+        let removeIndex = GroupOfFreePlace.indexOf(clickIndex);
+        GroupOfFreePlace.splice(removeIndex,1);
+        if(GroupOfFreePlace.length>0){
+            const randomIndex =Math.floor(Math.random()*GroupOfFreePlace.length);
+            let placeForX = GroupOfFreePlace[randomIndex];
+            GroupOfFreePlace.splice(randomIndex,1);
+            const characterX = document.createElement("img");
+            characterX.src = "./assets/icon-x.svg";
+            clickBox[placeForX].appendChild(characterX);
+            indexOfX.push(placeForX);
+            console.log(indexOfX)
+                winCondition.map((combination)=>{
+                    if(!checkX){
+                        checkX = combination.every((number)=>indexOfX.includes(number));
+                        if(checkX){
+                        combination.map((winnerCombination)=>{
+                            clickBox[winnerCombination].style.backgroundColor = '#31C3BD';
+                            clickBox[winnerCombination].firstChild.src ="./assets/icon-of-winner-x.svg";
+                        })
+                    }
+                    } 
+                })
+                clickBox[placeForX].classList.remove("oOutline");
+        }
+    }
+    if(n===3&&!checkO&&!checkX){
+        tiedRound.style.display = 'block';
+        setTimeout(()=>{
+            tiedRound.classList.add('transition-Div-Tied');
+        },100) 
+        tie++;
+        tieGame.textContent=tie;
+    }    
+}
+
+function logicAboutX(event){
+    const character = document.createElement("img");
+        character.src = "./assets/icon-x.svg";
+        event.target.appendChild(character);
+        xImage.style.display = "block";
+        oImage.style.display = "none";
+        event.target.classList.remove("oOutline");
+        indexOfX.push(Number(event.target.getAttribute('index')));
+        winCondition.map((combination)=>{
+            if(!checkX){
+                checkX = combination.every((number)=> indexOfX.includes(number));
+                if(checkX){
+                    combination.map((winnerCombination)=>{
+                        clickBox[winnerCombination].style.backgroundColor = '#31C3BD';
+                        clickBox[winnerCombination].firstChild.src ="./assets/icon-of-winner-x.svg";
+                    })
+                }
+            } 
+        })
+        if(!checkX){
+            let clickIndex = (Number(event.target.getAttribute('index')))
+            let removeIndex = GroupOfFreePlace.indexOf(clickIndex);
+            GroupOfFreePlace.splice(removeIndex,1);
+            if(GroupOfFreePlace.length>0){
+                const randomIndex =Math.floor(Math.random()*GroupOfFreePlace.length);
+                let placeForO = GroupOfFreePlace[randomIndex];
+                GroupOfFreePlace.splice(randomIndex,1);
+                const characterO = document.createElement("img");
+                characterO.src = "./assets/icon-o.svg";
+                clickBox[placeForO].appendChild(characterO);
+                indexOfO.push(placeForO);
+                winCondition.map((combination)=>{
+                    if(!checkO){
+                        checkO = combination.every((number)=>indexOfO.includes(number));
+                        if(checkO){
+                        combination.map((winnerCombination)=>{
+                            clickBox[winnerCombination].style.backgroundColor = '#F2B137';
+                            clickBox[winnerCombination].firstChild.src ="./assets/icon-of-winner-o.svg";
+                        })
+                    }
+                    } 
+                })
+                    clickBox[placeForO].classList.remove("xOutline");
+            }
+        }    
+        if(n===4&&!checkO&&!checkX){
+            tiedRound.style.display = 'block';
+            setTimeout(()=>{
+                tiedRound.classList.add('transition-Div-Tied');
+            },100) 
+            tie++;
+            tieGame.textContent=tie;
+        }
+}
+
  function addCharacter(event) {
     n++;
+    
+    if(clickOnSolo){
     giveOutline();
     if (n % 2 === 0) {
         const character = document.createElement("img");
@@ -194,26 +314,32 @@ function giveOutline(){
             } 
         })
     } else {
-        const character = document.createElement("img");
-        character.src = "./assets/icon-o.svg";
-        event.target.appendChild(character);
-        xImage.style.display = "block";
-        oImage.style.display = "none";
-        event.target.classList.remove("xOutline");
-        indexOfO.push(Number(event.target.getAttribute('index')));
-        winCondition.map((combination)=>{
-            if(!checkO){
-                checkO = combination.every((number)=>indexOfO.includes(number));
-                if(checkO){
-                combination.map((winnerCombination)=>{
-                    clickBox[winnerCombination].style.backgroundColor = '#F2B137';
-                    clickBox[winnerCombination].firstChild.src ="./assets/icon-of-winner-o.svg";
-                })
-            }
-            } 
-        })
+            const character = document.createElement("img");
+            character.src = "./assets/icon-o.svg";
+            event.target.appendChild(character);
+            xImage.style.display = "block";
+            oImage.style.display = "none";
+            event.target.classList.remove("xOutline");
+            indexOfO.push(Number(event.target.getAttribute('index')));
+            winCondition.map((combination)=>{
+                if(!checkO){
+                    checkO = combination.every((number)=>indexOfO.includes(number));
+                    if(checkO){
+                    combination.map((winnerCombination)=>{
+                        clickBox[winnerCombination].style.backgroundColor = '#F2B137';
+                        clickBox[winnerCombination].firstChild.src ="./assets/icon-of-winner-o.svg";
+                    })
+                }
+                } 
+            })
+        }
+    }else{
+        if(clickedOnXSecond){
+            logicAboutX(event);
+        }else{
+            logicAboutO(event);
+        }
     }
-    
     event.target.removeEventListener('click', addCharacter);
     winner();
 }
@@ -223,7 +349,7 @@ for (var i = 0; i<clickBox.length; i++){
 
 }
 
-restartButton.addEventListener("click", (event)=>{[]
+restartButton.addEventListener("click", (event)=>{
     restartOutPut.style.display = 'block';
 })
 
@@ -287,6 +413,28 @@ for(let i = 0; i<nextRoundButton.length; i++){
         if(clickedOnOSecond){
             clickedOnO = true;
         }
+        if(!clickOnComputer){
+            clickOnSolo = true;
+        }
+        if(!clickOnSolo){
+            clickOnComputer = true;
+        } 
+        GroupOfFreePlace =[0,1,2,3,4,5,6,7,8]
+        if(clickedOnOSecond){
+            const randomIndex =Math.floor(Math.random()*GroupOfFreePlace.length);
+            let placeForX = GroupOfFreePlace[randomIndex];
+            GroupOfFreePlace.splice(randomIndex,1);
+            const characterX = document.createElement("img");
+            characterX.src = "./assets/icon-x.svg";
+            clickBox[placeForX].appendChild(characterX);
+            clickBox[placeForX].removeEventListener('click', addCharacter); 
+            indexOfX.push(placeForX);
+            for (let i = 0; i<clickBox.length; i++){
+                clickBox[i].classList.remove("xOutline");
+                clickBox[i].classList.add("oOutline");
+            }
+            clickBox[placeForX].classList.remove("oOutline");
+        }      
     })
 }
 
@@ -331,6 +479,9 @@ for(let i = 0; i<quitButton.length; i++){
         clickedOnO = false;
         clickedOnXSecond = false;
         clickedOnOSecond = false;
+        clickOnSolo = false;
+        clickOnComputer = false;
+        GroupOfFreePlace =[0,1,2,3,4,5,6,7,8];
     })
 }
 
