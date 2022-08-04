@@ -186,6 +186,7 @@ function logicAboutO(event){
     xImage.style.display = "none";
     oImage.style.display = "block";
     indexOfO.push(Number(event.target.getAttribute('index')));
+    event.target.removeEventListener('click', addCharacter);
     winCondition.map((combination)=>{
         if(!checkO){
             checkO = combination.every((number)=>indexOfO.includes(number));
@@ -209,7 +210,6 @@ function logicAboutO(event){
             characterX.src = "./assets/icon-x.svg";
             clickBox[placeForX].appendChild(characterX);
             indexOfX.push(placeForX);
-            console.log(indexOfX)
                 winCondition.map((combination)=>{
                     if(!checkX){
                         checkX = combination.every((number)=>indexOfX.includes(number));
@@ -222,6 +222,7 @@ function logicAboutO(event){
                     } 
                 })
                 clickBox[placeForX].classList.remove("oOutline");
+                clickBox[placeForX].removeEventListener('click', addCharacter);
         }
     }
     if(n===3&&!checkO&&!checkX){
@@ -241,6 +242,7 @@ function logicAboutX(event){
         xImage.style.display = "block";
         oImage.style.display = "none";
         event.target.classList.remove("oOutline");
+        event.target.removeEventListener('click', addCharacter);
         indexOfX.push(Number(event.target.getAttribute('index')));
         winCondition.map((combination)=>{
             if(!checkX){
@@ -277,6 +279,7 @@ function logicAboutX(event){
                     } 
                 })
                     clickBox[placeForO].classList.remove("xOutline");
+                    clickBox[placeForO].removeEventListener('click', addCharacter);
             }
         }    
         if(n===4&&!checkO&&!checkX){
