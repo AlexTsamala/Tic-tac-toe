@@ -110,6 +110,7 @@ h2{
     text-align: center;
     color: #1A2A33;
     padding-bottom: 10px;
+    border:none;
 }
 
 #cpuButton{
@@ -319,6 +320,7 @@ h2{
     color:#1A2A33;
     margin-right: 16px;
     cursor: pointer;
+    border:none;
 }
 
 .next-round-button{
@@ -330,6 +332,7 @@ h2{
     background-color: #F2B137;
     box-shadow: inset 0px -4px 0px #CC8B13;  
     cursor: pointer;
+    border:none;
 }
 
 .round-tied{
