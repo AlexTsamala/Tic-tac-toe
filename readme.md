@@ -12,7 +12,8 @@
 - [Acknowledgments](#acknowledgments)
 
 ## Overview
-- Calculate's the correct tip and total cost of the bill per person
+- Tic tac toe is a simple game where you are choosing O or X and trying to win with your character.
+- Game has solos and multiplayer modes and giving you results all time .
 ### Links
 
 - Solution URL: [How to round numbers in JS](https://www.w3schools.com/jsref/jsref_tofixed.asp#:~:text=The%20toFixed()%20method%20converts,a%20specified%20number%20of%20decimals.)
